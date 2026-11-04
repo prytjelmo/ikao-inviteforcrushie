@@ -1,0 +1,1423 @@
+/* ---------- Theme: Pastel Pink & Green ---------- */
+:root {
+    /* Pastel Greens */
+    --green-dark: #2d4632;
+    --green-pastel: #6fa675;
+    --green-soft: #b4deb9;
+    --green-light: #e3f3e6;
+
+    /* Pastel Pinks */
+    --pink-dark: #b85b70;
+    --pink-pastel: #f08ea3;
+    --pink-soft: #f7c3cf;
+    --pink-light: #fdeaf0;
+
+    /* Accents & Neutrals */
+    --cream: #faecef;
+    --cream-light: #fdf7f8;
+    --gold: #d4a373;
+
+    --font-script: "Dancing Script", cursive;
+    --font-serif: "Cormorant Garamond", serif;
+    --font-sans: "Quicksand", sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+    background: #fdeaf0;
+    color: var(--green-dark);
+    font-family: var(--font-sans);
+    overflow: hidden;
+}
+
+/* ---------- Screens (one visible at a time) ---------- */
+.screen {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+
+.screen.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Background for all screens - vibrant pastel pink & green ambient glow */
+#loader,
+#message,
+#letter,
+#invite {
+    background:
+        radial-gradient(circle at 14% 16%, rgba(246, 149, 173, 0.55) 0%, transparent 48%),
+        radial-gradient(circle at 86% 84%, rgba(138, 209, 152, 0.52) 0%, transparent 50%),
+        radial-gradient(circle at 84% 14%, rgba(250, 182, 198, 0.42) 0%, transparent 44%),
+        radial-gradient(circle at 16% 86%, rgba(162, 224, 174, 0.45) 0%, transparent 46%),
+        linear-gradient(145deg, #fde7ee 0%, #f7d5df 38%, #e1f3e5 75%, #d4eed8 100%);
+    background-attachment: fixed;
+}
+
+/* ---------- Loading screen ---------- */
+.loader-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 22px;
+    text-align: center;
+}
+
+.heart {
+    width: 110px;
+    height: auto;
+    overflow: visible;
+    animation: beat 1.2s ease-in-out infinite;
+    filter: drop-shadow(0 8px 18px rgba(184, 91, 112, 0.22));
+}
+
+.heart-bg {
+    fill: rgba(243, 166, 181, 0.22);
+}
+
+.heart-fill {
+    fill: var(--pink-pastel);
+}
+
+.heart-outline {
+    fill: none;
+    stroke: var(--green-dark);
+    stroke-width: 3;
+    stroke-linejoin: round;
+}
+
+@keyframes beat {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.07);
+    }
+}
+
+.loader-text {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 1.35rem;
+    min-height: 1.6em;
+    color: var(--green-dark);
+    transition: opacity 0.4s ease;
+}
+
+.loader-text.fade {
+    opacity: 0;
+}
+
+.loader-percent {
+    font-size: 0.85rem;
+    letter-spacing: 0.2em;
+    color: var(--green-pastel);
+    font-weight: 500;
+}
+
+/* "Tap to continue" hints */
+.tap-hint {
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--green-dark);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.8s ease;
+}
+
+.tap-hint.show {
+    visibility: visible;
+    opacity: 0.8;
+    animation: pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 0.35;
+    }
+
+    50% {
+        opacity: 0.9;
+    }
+}
+
+#loader.ready,
+#message.ready,
+#letter.ready {
+    cursor: pointer;
+}
+
+/* ---------- Message screen ---------- */
+.message-box {
+    max-width: 440px;
+    text-align: center;
+}
+
+.script {
+    font-family: var(--font-script);
+}
+
+.message-title {
+    color: var(--pink-dark);
+    font-size: 2.6rem;
+    margin-bottom: 22px;
+}
+
+.message-line {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 1.4rem;
+    line-height: 1.5;
+    color: var(--green-dark);
+    margin-bottom: 12px;
+}
+
+/* fade-in animation for message pieces */
+.message-title,
+.message-line {
+    opacity: 0;
+    transform: translateY(10px);
+}
+
+#message.active .message-title,
+#message.active .message-line {
+    animation: riseIn 1s ease forwards;
+    animation-delay: calc(0.4s + var(--i) * 1.3s);
+}
+
+#message .tap-hint {
+    margin-top: 28px;
+}
+
+/* ---------- Letter screen ---------- */
+.letter-box {
+    max-width: 520px;
+    width: 100%;
+    padding: 36px 30px;
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 26px;
+    border: 1px solid rgba(243, 166, 181, 0.4);
+    box-shadow: 0 16px 36px rgba(184, 91, 112, 0.12);
+    text-align: center;
+}
+
+#letter.active .letter-box {
+    animation: riseIn 0.9s ease forwards;
+}
+
+.letter-title {
+    color: var(--pink-dark);
+    font-size: 2.4rem;
+    margin-bottom: 20px;
+}
+
+.letter-para {
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    line-height: 1.75;
+    color: var(--green-dark);
+    margin-bottom: 16px;
+    text-align: left;
+}
+
+#letter .tap-hint {
+    margin-top: 24px;
+}
+
+/* typing effect */
+.untyped {
+    visibility: hidden;
+}
+
+.typing .typed::after {
+    content: "|";
+    margin-left: 1px;
+    color: var(--pink-dark);
+    animation: blink 0.8s steps(1) infinite;
+}
+
+@keyframes blink {
+    50% {
+        opacity: 0;
+    }
+}
+
+/* ---------- Invite screen ---------- */
+.invite-box {
+    max-width: 480px;
+    width: 100%;
+    padding: 42px 30px;
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 28px;
+    border: 1px solid rgba(125, 168, 130, 0.35);
+    box-shadow: 0 18px 40px rgba(184, 91, 112, 0.14);
+    text-align: center;
+}
+
+#invite.active .invite-box {
+    animation: riseIn 0.9s ease forwards;
+}
+
+.invite-badge {
+    display: inline-block;
+    padding: 6px 16px;
+    font-size: 0.75rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    background: var(--pink-soft);
+    color: var(--pink-dark);
+    border-radius: 999px;
+    font-weight: 600;
+    margin-bottom: 18px;
+}
+
+.invite-title {
+    font-size: 3.2rem;
+    color: var(--green-dark);
+    margin-bottom: 12px;
+    line-height: 1.15;
+}
+
+.invite-sub {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 1.25rem;
+    color: var(--pink-dark);
+    margin-bottom: 30px;
+}
+
+.btn-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 18px;
+    position: relative;
+    min-height: 56px;
+}
+
+.btn {
+    border: none;
+    outline: none;
+    padding: 14px 28px;
+    border-radius: 999px;
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.btn-yes {
+    background: linear-gradient(135deg, var(--pink-pastel), var(--pink-dark));
+    color: #ffffff;
+    box-shadow: 0 8px 20px rgba(184, 91, 112, 0.3);
+}
+
+.btn-yes:hover {
+    box-shadow: 0 10px 24px rgba(184, 91, 112, 0.45);
+}
+
+.btn-no {
+    background: var(--green-light);
+    color: var(--green-dark);
+    border: 1px solid var(--green-pastel);
+    box-shadow: 0 4px 12px rgba(55, 81, 59, 0.08);
+}
+
+.celebration {
+    margin-top: 10px;
+    animation: riseIn 0.8s ease forwards;
+}
+
+.celebration.hidden {
+    display: none;
+}
+
+.celeb-title {
+    font-size: 2.8rem;
+    color: var(--pink-dark);
+    margin-bottom: 8px;
+}
+
+.celeb-sub {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 1.3rem;
+    color: var(--green-dark);
+}
+
+/* No button running away */
+.btn-no.is-dodging {
+    position: absolute;
+    z-index: 10;
+    white-space: nowrap;
+    transition: left 0.45s cubic-bezier(0.34, 1.56, 0.64, 1),
+        top 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* the No button after it switches teams */
+.btn-pop {
+    animation: pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes pop {
+    0% {
+        transform: scale(0.6);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.witty {
+    margin-top: 20px;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 1.2rem;
+    color: var(--pink-dark);
+    animation: riseIn 0.6s ease forwards;
+}
+
+.witty.hidden {
+    display: none;
+}
+
+/* Floating heart particles on celebration */
+.particle {
+    position: fixed;
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 12px);
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-select: none;
+    will-change: transform, opacity;
+    animation: floatUp var(--dur, 3.5s) cubic-bezier(0.2, 0.6, 0.3, 1) forwards;
+    z-index: 999;
+}
+
+@keyframes floatUp {
+    0% {
+        opacity: 0;
+        transform: translate3d(0, 0, 0) scale(0.6) rotate(0deg);
+    }
+
+    15% {
+        opacity: 1;
+    }
+
+    85% {
+        opacity: 0.9;
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate3d(var(--drift, 0px), calc(var(--rise, 400px) * -1), 0) scale(1.15) rotate(var(--spin, 20deg));
+    }
+}
+
+@keyframes riseIn {
+    from {
+        opacity: 0;
+        transform: translateY(14px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* =========================================================
+   RESPONSIVE: iPhone, iPad, safe areas. Laptop stays the same
+   ========================================================= */
+
+html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Screens can scroll if their content is taller than the display,
+   and keep clear of the notch / home bar */
+.screen {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-top: max(24px, env(safe-area-inset-top));
+    padding-right: max(24px, env(safe-area-inset-right));
+    padding-bottom: max(24px, env(safe-area-inset-bottom));
+    padding-left: max(24px, env(safe-area-inset-left));
+}
+
+/* Centers content when it fits; when it doesn't, it scrolls from the top
+   instead of getting cut off */
+.screen>* {
+    margin: auto;
+}
+
+/* but not the No button while it's running around */
+.screen>.btn-no.is-dodging {
+    margin: 0;
+}
+
+.btn {
+    touch-action: manipulation;
+    /* no double-tap zoom delay on iPhone */
+}
+
+/* Buttons wrap to two rows instead of overflowing on narrow screens */
+.btn-group {
+    flex-wrap: wrap;
+    row-gap: 12px;
+}
+
+/* ---------- Phones (iPhone 12 and similar) ---------- */
+@media (max-width: 600px) {
+    .screen {
+        padding-left: max(18px, env(safe-area-inset-left));
+        padding-right: max(18px, env(safe-area-inset-right));
+    }
+
+    .heart {
+        width: 96px;
+    }
+
+    .loader-text {
+        font-size: 1.2rem;
+    }
+
+    .tap-hint {
+        font-size: 0.72rem;
+    }
+
+    .message-title {
+        font-size: 2.3rem;
+        margin-bottom: 16px;
+    }
+
+    .message-line {
+        font-size: 1.25rem;
+    }
+
+    .letter-box {
+        padding: 26px 20px;
+        border-radius: 22px;
+    }
+
+    .letter-title {
+        font-size: 2rem;
+        margin-bottom: 14px;
+    }
+
+    .letter-para {
+        font-size: 1.12rem;
+        line-height: 1.6;
+        margin-bottom: 12px;
+    }
+
+    .invite-box {
+        padding: 32px 20px;
+        border-radius: 24px;
+    }
+
+    .invite-title {
+        font-size: 2.5rem;
+    }
+
+    .invite-sub {
+        font-size: 1.1rem;
+        margin-bottom: 24px;
+    }
+
+    .btn {
+        padding: 13px 22px;
+        font-size: 0.95rem;
+    }
+
+    .btn-group {
+        gap: 12px;
+    }
+
+    .celeb-title {
+        font-size: 2.2rem;
+    }
+
+    .celeb-sub {
+        font-size: 1.15rem;
+    }
+}
+
+/* ---------- Tablets (iPad 10th gen, portrait and landscape) ---------- */
+@media (min-width: 768px) and (max-width: 1199px) {
+    .heart {
+        width: 130px;
+    }
+
+    .loader-text {
+        font-size: 1.5rem;
+    }
+
+    .message-box {
+        max-width: 560px;
+    }
+
+    .message-title {
+        font-size: 3rem;
+    }
+
+    .message-line {
+        font-size: 1.65rem;
+    }
+
+    .letter-box {
+        max-width: 640px;
+        padding: 44px 40px;
+    }
+
+    .letter-title {
+        font-size: 2.8rem;
+    }
+
+    .letter-para {
+        font-size: 1.4rem;
+    }
+
+    .invite-box {
+        max-width: 560px;
+        padding: 52px 40px;
+    }
+
+    .invite-title {
+        font-size: 3.6rem;
+    }
+
+    .invite-sub {
+        font-size: 1.4rem;
+    }
+
+    .btn {
+        font-size: 1.1rem;
+        padding: 16px 32px;
+    }
+}
+
+/* ---------- Short screens (phone held sideways) ---------- */
+@media (max-height: 520px) {
+    .heart {
+        width: 70px;
+    }
+
+    .loader-inner {
+        gap: 12px;
+    }
+
+    .message-title {
+        font-size: 2rem;
+        margin-bottom: 10px;
+    }
+
+    .message-line {
+        font-size: 1.1rem;
+        margin-bottom: 6px;
+    }
+
+    .letter-box,
+    .invite-box {
+        padding: 20px 24px;
+    }
+
+    .letter-title {
+        font-size: 1.8rem;
+        margin-bottom: 10px;
+    }
+
+    .letter-para {
+        font-size: 1rem;
+        line-height: 1.5;
+    }
+
+    .invite-title {
+        font-size: 2.2rem;
+    }
+
+    .invite-sub {
+        margin-bottom: 14px;
+    }
+}
+
+/* =========================================================
+   LETTER: sizes are in "em" so the whole card scales together
+   (main.js shrinks the font-size until the card fits the screen)
+   ========================================================= */
+.letter-box {
+    font-size: 16px;
+    /* starting size; JS may shrink it */
+    max-width: 560px;
+    padding: 2.2em 1.9em;
+    border-radius: 1.6em;
+}
+
+.letter-title {
+    font-size: 2.4em;
+    line-height: 1.15;
+    margin-bottom: 0.5em;
+}
+
+.letter-para {
+    font-size: 1.25em;
+    line-height: 1.6;
+    margin-bottom: 0.8em;
+}
+
+#letter .tap-hint {
+    font-size: 0.7em;
+    margin-top: 1.4em;
+}
+
+/* iPad: start a little bigger, JS still shrinks it if needed */
+@media (min-width: 768px) and (max-width: 1199px) {
+    .letter-box {
+        font-size: 19px;
+        max-width: 660px;
+    }
+}
+
+/* Phones: slightly tighter card */
+@media (max-width: 600px) {
+    .letter-box {
+        padding: 1.6em 1.2em;
+    }
+}
+
+/* ---------- Music button ---------- */
+.music-btn {
+    position: fixed;
+    top: calc(env(safe-area-inset-top, 0px) + 14px);
+    right: calc(env(safe-area-inset-right, 0px) + 14px);
+    width: 44px;
+    height: 44px;
+    border: 1px solid rgba(243, 166, 181, 0.5);
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.75);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 6px 16px rgba(184, 91, 112, 0.18);
+    font-size: 1.1rem;
+    line-height: 1;
+    cursor: pointer;
+    z-index: 1000;
+    touch-action: manipulation;
+    transition: opacity 0.6s ease, transform 0.2s ease;
+}
+
+.music-btn:active {
+    transform: scale(0.92);
+}
+
+.music-btn.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* ---------- Box shine after she says yes ---------- */
+#invite.active .invite-box.shine {
+    position: relative;
+    overflow: hidden;
+    /* keeps the sweep inside the rounded corners */
+    border-color: rgba(240, 142, 163, 0.85);
+    animation: boxGlow 2.4s ease-in-out infinite;
+}
+
+/* the light streak that sweeps across */
+.invite-box.shine::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 45%;
+    height: 100%;
+    background: linear-gradient(105deg,
+            rgba(255, 255, 255, 0) 0%,
+            rgba(255, 255, 255, 0.85) 50%,
+            rgba(255, 255, 255, 0) 100%);
+    transform: translateX(-130%) skewX(-18deg);
+    animation: shineSweep 1.6s ease-in-out 0.15s 3;
+    /* sweeps 3 times */
+    pointer-events: none;
+}
+
+@keyframes shineSweep {
+    from {
+        transform: translateX(-130%) skewX(-18deg);
+    }
+
+    to {
+        transform: translateX(330%) skewX(-18deg);
+    }
+}
+
+@keyframes boxGlow {
+
+    0%,
+    100% {
+        box-shadow: 0 18px 40px rgba(184, 91, 112, 0.14),
+            0 0 0 rgba(255, 255, 255, 0);
+    }
+
+    50% {
+        box-shadow: 0 18px 50px rgba(240, 142, 163, 0.4),
+            0 0 30px 6px rgba(255, 255, 255, 0.9),
+            0 0 60px 12px rgba(240, 142, 163, 0.3);
+    }
+}
+
+/* =========================================================
+   PART 2: INVITATION PAGE
+   ========================================================= */
+html.returning #loader {
+    opacity: 0;
+    visibility: hidden;
+    transition: none;
+}
+
+.btn.hidden {
+    display: none;
+}
+
+#btnDetails {
+    margin-top: 18px;
+}
+
+a.btn {
+    display: inline-block;
+    text-decoration: none;
+}
+
+#details {
+    --tabbar-h: calc(66px + env(safe-area-inset-bottom, 0px));
+    display: block;
+    padding: 0;
+    overflow: hidden;
+    /* overlay + your photo + a fallback gradient if the photo is missing */
+    background-image:
+        linear-gradient(rgba(45, 70, 50, 0.4), rgba(120, 50, 70, 0.35)),
+        url("../assets/images/restobg.jpg"),
+        linear-gradient(145deg, #6fa675, #b85b70);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#details>* {
+    margin: 0;
+}
+
+/* ----- panels ----- */
+.panels {
+    position: absolute;
+    inset: 0 0 var(--tabbar-h) 0;
+}
+
+.panel {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    padding: max(24px, env(safe-area-inset-top)) 22px 24px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(8px);
+    transition: opacity 0.5s ease, transform 0.5s ease, visibility 0.5s ease;
+}
+
+.panel.active {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+}
+
+.panel>* {
+    margin: auto;
+}
+
+/* ----- glass cards (date, venue, attire, message) ----- */
+.glass {
+    width: 100%;
+    max-width: 460px;
+    padding: 30px 24px;
+    background: rgba(255, 255, 255, 0.84);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    border-radius: 26px;
+    border: 1px solid rgba(243, 166, 181, 0.45);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.18);
+    text-align: center;
+}
+
+.panel-title {
+    font-size: 2.4rem;
+    color: var(--pink-dark);
+    margin-bottom: 14px;
+}
+
+.panel-text {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 1.25rem;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+/* ----- home ----- */
+.home {
+    width: 100%;
+    max-width: 520px;
+    text-align: center;
+    color: #fff;
+    text-shadow: 0 2px 14px rgba(0, 0, 0, 0.35);
+}
+
+.home-eyebrow {
+    font-size: 0.8rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+}
+
+.home-name {
+    font-size: clamp(2.8rem, 12vw, 4.4rem);
+    line-height: 1.05;
+}
+
+.home-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin: 4px 0;
+    color: var(--pink-soft);
+}
+
+.home-divider::before,
+.home-divider::after {
+    content: "";
+    width: 46px;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.7);
+}
+
+.home-sub {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 1.2rem;
+    margin-top: 10px;
+}
+
+.home-date {
+    font-size: 1.15rem;
+    letter-spacing: 0.04em;
+    margin-top: 16px;
+}
+
+.home-time {
+    font-size: 0.95rem;
+    opacity: 0.92;
+}
+
+.countdown {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 22px 0 18px;
+}
+
+.cd-card {
+    min-width: 64px;
+    padding: 10px 8px;
+    background: rgba(250, 245, 234, 0.95);
+    color: var(--green-dark);
+    border-radius: 14px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
+    text-shadow: none;
+}
+
+.cd-num {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+}
+
+.cd-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--green-pastel);
+    font-weight: 600;
+}
+
+.home-close {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 1.15rem;
+}
+
+/* ----- date ----- */
+.cal-head {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    letter-spacing: 0.05em;
+    margin-bottom: 12px;
+}
+
+.cal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 6px;
+    margin-bottom: 16px;
+}
+
+.cal-dow {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--green-pastel);
+}
+
+.cal-day {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.95rem;
+    border-radius: 50%;
+}
+
+.cal-day.on {
+    background: linear-gradient(135deg, var(--pink-pastel), var(--pink-dark));
+    color: #fff;
+    font-weight: 700;
+    box-shadow: 0 6px 14px rgba(184, 91, 112, 0.4);
+}
+
+.when-line {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+}
+
+/* ----- venue ----- */
+.venue-name {
+    font-size: 3rem;
+    color: var(--green-dark);
+    line-height: 1.1;
+}
+
+.venue-address {
+    font-size: 1rem;
+    margin: 6px 0 16px;
+    opacity: 0.85;
+}
+
+/* ----- attire ----- */
+.dress-code {
+    font-family: var(--font-serif);
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.swatches {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 14px;
+}
+
+.swatch {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+}
+
+.swatch i {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.18);
+}
+
+/* ----- message ----- */
+.quick {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 14px;
+}
+
+.chip {
+    border: 1px solid var(--pink-pastel);
+    background: var(--pink-light);
+    color: var(--pink-dark);
+    padding: 9px 14px;
+    border-radius: 999px;
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    touch-action: manipulation;
+}
+
+#replyText {
+    width: 100%;
+    padding: 12px 14px;
+    margin-bottom: 14px;
+    border: 1px solid rgba(125, 168, 130, 0.5);
+    border-radius: 14px;
+    font-family: var(--font-sans);
+    font-size: 16px;
+    /* 16px stops iPhone from zooming in when she taps the box */
+    resize: none;
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--green-dark);
+}
+
+.reply-status {
+    margin-top: 12px;
+    min-height: 1.4em;
+    font-family: var(--font-serif);
+    font-style: italic;
+    color: var(--pink-dark);
+}
+
+/* ----- bottom tab bar ----- */
+.tabbar {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: var(--tabbar-h);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    display: flex;
+    background: rgba(250, 236, 239, 0.96);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(184, 91, 112, 0.2);
+    z-index: 5;
+}
+
+.tab {
+    flex: 1;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    border: none;
+    background: none;
+    color: var(--green-dark);
+    opacity: 0.6;
+    font-family: var(--font-sans);
+    font-size: 0.62rem;
+    letter-spacing: 0.06em;
+    cursor: pointer;
+    touch-action: manipulation;
+    transition: opacity 0.2s ease, color 0.2s ease;
+}
+
+.tab svg {
+    width: 22px;
+    height: 22px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.7;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.tab.active {
+    opacity: 1;
+    color: var(--pink-dark);
+}
+
+.tab.active::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 20%;
+    right: 20%;
+    height: 2px;
+    background: var(--pink-dark);
+    border-radius: 0 0 2px 2px;
+}
+
+/* ----- tablets and laptops ----- */
+@media (min-width: 768px) {
+    .cd-card {
+        min-width: 84px;
+        padding: 14px 10px;
+    }
+
+    .cd-num {
+        font-size: 2rem;
+    }
+
+    .glass {
+        max-width: 520px;
+        padding: 38px 32px;
+    }
+
+    .tab {
+        font-size: 0.7rem;
+    }
+}
+
+/* ----- short screens (phone sideways) ----- */
+@media (max-height: 520px) {
+    .home-name {
+        font-size: 2.2rem;
+    }
+
+    .countdown {
+        margin: 12px 0;
+    }
+
+    .panel-title {
+        font-size: 1.8rem;
+        margin-bottom: 8px;
+    }
+}
+
+/* Screens that aren't showing must never catch taps
+   (the invitation page's Home panel was sitting invisibly on top of everything) */
+.screen:not(.active) {
+    pointer-events: none;
+}
+
+/* ----- venue (map card) ----- */
+.venue-wrap {
+    width: 100%;
+    max-width: 520px;
+    text-align: center;
+}
+
+.venue-eyebrow {
+    color: #fff;
+    font-size: 0.8rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+}
+
+.venue-title {
+    color: #fff;
+    font-size: clamp(2.6rem, 10vw, 3.6rem);
+    line-height: 1.1;
+    margin: 4px 0 18px;
+    text-shadow: 0 2px 14px rgba(0, 0, 0, 0.4);
+}
+
+.venue-card {
+    text-align: left;
+    padding: 20px 20px 22px;
+    background: rgba(253, 247, 248, 0.94);
+    border: 1px solid rgba(243, 166, 181, 0.45);
+    border-radius: 22px;
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.2);
+}
+
+.venue-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--green-pastel);
+    font-weight: 600;
+}
+
+.venue-card .venue-name {
+    font-family: var(--font-serif);
+    font-size: 1.7rem;
+    font-weight: 600;
+    line-height: 1.2;
+    margin-top: 4px;
+    color: var(--green-dark);
+}
+
+.venue-sub {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 1.05rem;
+    line-height: 1.35;
+    opacity: 0.75;
+    margin: 4px 0 14px;
+}
+
+.map-box {
+    position: relative;
+    height: 200px;
+    margin-bottom: 14px;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(125, 168, 130, 0.4);
+    background: var(--green-light);
+}
+
+.map-box iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+.map-open {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 7px 12px;
+    background: #fff;
+    color: #1a73e8;
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+.btn-directions {
+    display: inline-block;
+    padding: 9px 18px;
+    border: 1.5px solid var(--pink-dark);
+    border-radius: 999px;
+    color: var(--pink-dark);
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    touch-action: manipulation;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.btn-directions:hover,
+.btn-directions:active {
+    background: var(--pink-dark);
+    color: #fff;
+}
+
+.venue-witty {
+    margin-top: 18px;
+    color: #fff;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 1.3rem;
+    line-height: 1.4;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.45);
+}
+
+@media (min-width: 768px) {
+    .map-box {
+        height: 250px;
+    }
+}
+
+.swatch i {
+    border-color: rgba(45, 70, 50, 0.2);
+}
+
+.attire-witty {
+    margin-top: 20px;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 1.25rem;
+    line-height: 1.4;
+    color: var(--pink-dark);
+}
+
+/* ---------- Letter photos (polaroid pop-up) ---------- */
+.polaroids {
+    display: flex;
+    justify-content: center;
+    flex-wrap: nowrap;
+    gap: 0.6em;
+    margin-top: 1.2em;
+}
+
+.polaroid {
+    flex: 0 1 4em;
+    /* sized in em, so they shrink along with the letter text */
+    min-width: 0;
+    padding: 0.3em 0.3em 0.9em;
+    background: #fff;
+    border-radius: 0.2em;
+    box-shadow: 0 0.4em 0.9em rgba(184, 91, 112, 0.25);
+    opacity: 0;
+    transform: rotate(var(--r)) scale(0.6) translateY(0.8em);
+}
+
+.polaroid img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    object-position: 50% 30%;
+}
+
+.polaroids.show .polaroid {
+    animation:
+        photoPop 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards,
+        photoFloat 5s ease-in-out 1.4s infinite;
+    animation-delay: calc(var(--i) * 0.35s), calc(1.4s + var(--i) * 0.4s);
+}
+
+@keyframes photoPop {
+    to {
+        opacity: 1;
+        transform: rotate(var(--r)) scale(1) translateY(0);
+    }
+}
+
+@keyframes photoFloat {
+
+    0%,
+    100% {
+        opacity: 1;
+        transform: rotate(var(--r)) scale(1) translateY(0);
+    }
+
+    50% {
+        opacity: 1;
+        transform: rotate(var(--r)) scale(1) translateY(-0.25em);
+    }
+}

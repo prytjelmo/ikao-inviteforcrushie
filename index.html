@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>For You</title>
+
+    <!-- Tab logo: a little heart that matches the loading screen -->
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 108 98'%3E%3Cpath d='M50 85 C10 55 0 35 0 22 C0 8 11 0 25 0 C36 0 45 6 50 14 C55 6 64 0 75 0 C89 0 100 8 100 22 C100 35 90 55 50 85 Z' fill='%23f08ea3' stroke='%232d4632' stroke-width='5' stroke-linejoin='round'/%3E%3C/svg%3E" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,400&family=Dancing+Script:wght@600&family=Quicksand:wght@400;500;600&display=swap"
+        rel="stylesheet" />
+
+    <link rel="stylesheet" href="css/style.css" />
+    <script>
+        try { if (localStorage.getItem("saidYes") === "1" && !/reset/.test(location.search)) document.documentElement.classList.add("returning"); } catch (e) { }
+    </script>
+</head>
+
+<body>
+
+    <!-- SCREEN 1: LOADING -->
+    <section id="loader" class="screen active">
+        <div class="loader-inner">
+
+            <svg class="heart" viewBox="-4 -4 108 98" aria-hidden="true">
+                <defs>
+                    <clipPath id="heartClip">
+                        <path
+                            d="M50 85 C10 55 0 35 0 22 C0 8 11 0 25 0 C36 0 45 6 50 14 C55 6 64 0 75 0 C89 0 100 8 100 22 C100 35 90 55 50 85 Z" />
+                    </clipPath>
+                </defs>
+
+                <!-- soft empty heart -->
+                <path class="heart-bg"
+                    d="M50 85 C10 55 0 35 0 22 C0 8 11 0 25 0 C36 0 45 6 50 14 C55 6 64 0 75 0 C89 0 100 8 100 22 C100 35 90 55 50 85 Z" />
+
+                <!-- fill that rises -->
+                <g clip-path="url(#heartClip)">
+                    <rect id="heartFill" class="heart-fill" x="-5" y="90" width="110" height="95" />
+                </g>
+
+                <!-- outline -->
+                <path class="heart-outline"
+                    d="M50 85 C10 55 0 35 0 22 C0 8 11 0 25 0 C36 0 45 6 50 14 C55 6 64 0 75 0 C89 0 100 8 100 22 C100 35 90 55 50 85 Z" />
+            </svg>
+
+            <p id="loaderText" class="loader-text">Preparing something for you...</p>
+            <p id="loaderPercent" class="loader-percent">0%</p>
+            <p id="tapHint" class="tap-hint">Tap anywhere to continue</p>
+        </div>
+    </section>
+
+    <!-- SCREEN 2: MESSAGE (sample text, edit it later) -->
+    <section id="message" class="screen">
+        <div class="message-box">
+            <p class="script message-title" style="--i:0">Hi, pretty</p>
+            <p class="message-line" style="--i:1">I've been wanting to do something special for you.</p>
+            <p class="message-line" style="--i:2">You make ordinary days feel lighter, and I'm so grateful for you.</p>
+            <p class="message-line" style="--i:3">So I made you this little surprise.</p>
+            <p class="message-line" style="--i:4">There's something I want to ask you...</p>
+            <p id="msgHint" class="tap-hint">Tap to continue</p>
+        </div>
+    </section>
+
+    <!-- SCREEN 3: LOVE LETTER (2-paragraph placeholder message) -->
+    <section id="letter" class="screen">
+        <div class="letter-box">
+            <p class="script letter-title">To my favorite person,</p>
+            <p class="letter-para">
+                From the quiet moments we share to the laughs that catch us by surprise, every single memory with you
+                has and will always be my favorite place to be. You bring warmth into my world in ways words can barely
+                describe, and even though life has taken us on separate paths, nothing has changed the way I cherish
+                you. No matter where life leads us, my love for you remains just as genuine, constant, and everlasting.
+            </p>
+            <p class="letter-para">
+                I wanted to take a moment to remind you that, even with the distance between us, you remain someone I
+                hold incredibly close to my heart. Time may change the circumstances between two people, but it could
+                never erase the admiration, tenderness, and love I have for you. I still find countless reasons to
+                appreciate the person you are, and I will always be grateful that I got to know someone as special as
+                you.
+            </p>
+            <p id="letterHint" class="tap-hint">Tap to continue</p>
+        </div>
+    </section>
+
+    <!-- SCREEN 4: INVITATION -->
+    <section id="invite" class="screen">
+        <div class="invite-box">
+            <span class="invite-badge">A Special Question</span>
+            <h1 class="script invite-title">Will you go out with me?</h1>
+            <p class="invite-sub">I would love nothing more than to spend this day with you.</p>
+
+            <div class="btn-group">
+                <button id="btnYes" class="btn btn-yes">Yes, absolutely! 💖</button>
+                <button id="btnNo" class="btn btn-no">No</button>
+            </div>
+
+            <p id="wittyLine" class="witty hidden"></p>
+
+            <div id="celebration" class="celebration hidden">
+                <p class="script celeb-title">Yay! It's a date! 💕</p>
+                <p class="celeb-sub">Can't wait po pretty girl.</p>
+                <button id="btnDetails" class="btn btn-yes hidden">See the details 💌</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- SCREEN 5: INVITATION DETAILS (after she says yes, and every time she reopens the link) -->
+    <section id="details" class="screen">
+        <div class="panels">
+
+            <!-- HOME -->
+            <div class="panel active" id="tab-home">
+                <div class="home">
+                    <p class="home-eyebrow">You're invited</p>
+                    <h2 class="script home-name" id="invHer"></h2>
+                    <div class="home-divider">♥</div>
+                    <h2 class="script home-name" id="invYou"></h2>
+                    <p class="home-sub" id="invSub"></p>
+                    <p class="home-date" id="invDate"></p>
+                    <p class="home-time" id="invTime"></p>
+                    <div class="countdown">
+                        <div class="cd-card"><span class="cd-num" id="cdDays">00</span><span
+                                class="cd-label">Days</span></div>
+                        <div class="cd-card"><span class="cd-num" id="cdHours">00</span><span
+                                class="cd-label">Hours</span></div>
+                        <div class="cd-card"><span class="cd-num" id="cdMins">00</span><span
+                                class="cd-label">Minutes</span></div>
+                        <div class="cd-card"><span class="cd-num" id="cdSecs">00</span><span
+                                class="cd-label">Seconds</span></div>
+                    </div>
+                    <p class="home-close" id="invClose"></p>
+                </div>
+            </div>
+
+            <!-- DATE -->
+            <div class="panel" id="tab-date">
+                <div class="glass">
+                    <h2 class="script panel-title">Save the date</h2>
+                    <p class="cal-head" id="calHead"></p>
+                    <div class="cal-grid" id="calGrid"></div>
+                    <p class="when-line" id="whenLine"></p>
+                    <button class="btn btn-yes" id="btnCal">Add to calendar 📅</button>
+                </div>
+            </div>
+
+            <!-- VENUE -->
+            <div class="panel" id="tab-venue">
+                <div class="venue-wrap">
+                    <p class="venue-eyebrow">Where to find us</p>
+                    <h2 class="script venue-title">Venue Details</h2>
+
+                    <div class="venue-card">
+                        <p class="venue-label">Dinner date</p>
+                        <h3 class="venue-name" id="venueName"></h3>
+                        <p class="venue-sub" id="venueAddress"></p>
+
+                        <div class="map-box">
+                            <iframe id="venueMap" title="Map of the venue" loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+                            <a class="map-open" id="mapOpen" target="_blank" rel="noopener">Open in Maps ↗</a>
+                        </div>
+
+                        <a class="btn-directions" id="btnMaps" target="_blank" rel="noopener">get directions</a>
+                    </div>
+
+                    <p class="venue-witty" id="venueNote"></p>
+                </div>
+            </div>
+
+            <!-- ATTIRE -->
+            <div class="panel" id="tab-attire">
+                <div class="glass">
+                    <h2 class="script panel-title">What to wear</h2>
+                    <p class="dress-code" id="dressCode"></p>
+                    <p class="panel-text" id="attireNote"></p>
+                    <div class="swatches" id="swatches"></div>
+                    <p class="attire-witty" id="attireWitty"></p>
+                </div>
+            </div>
+
+            <!-- MESSAGE -->
+            <div class="panel" id="tab-message">
+                <div class="glass">
+                    <h2 class="script panel-title">Say something 💌</h2>
+                    <div class="quick" id="quickReplies">
+                        <button class="chip" data-msg="Can't wait! 💖">Can't wait! 💖</button>
+                        <button class="chip" data-msg="I'm so excited 🥰">I'm so excited 🥰</button>
+                        <button class="chip" data-msg="See you there! 💕">See you there! 💕</button>
+                    </div>
+                    <textarea id="replyText" rows="3" maxlength="200"
+                        placeholder="Or write your own message..."></textarea>
+                    <button class="btn btn-yes" id="btnSend">Send 💌</button>
+                    <p class="reply-status" id="replyStatus"></p>
+                </div>
+            </div>
+        </div>
+
+        <nav class="tabbar" aria-label="Invitation sections">
+            <button class="tab active" data-tab="home" aria-label="Home">
+                <svg viewBox="0 0 24 24">
+                    <path d="M3 11l9-8 9 8" />
+                    <path d="M5 10v10h14V10" />
+                </svg><span>Home</span>
+            </button>
+            <button class="tab" data-tab="date" aria-label="Date">
+                <svg viewBox="0 0 24 24">
+                    <rect x="3" y="5" width="18" height="16" rx="2" />
+                    <path d="M3 10h18M8 3v4M16 3v4" />
+                </svg><span>Date</span>
+            </button>
+            <button class="tab" data-tab="venue" aria-label="Venue">
+                <svg viewBox="0 0 24 24">
+                    <path d="M12 21s-7-6.2-7-11a7 7 0 0114 0c0 4.8-7 11-7 11z" />
+                    <circle cx="12" cy="10" r="2.5" />
+                </svg><span>Venue</span>
+            </button>
+            <button class="tab" data-tab="attire" aria-label="Attire">
+                <svg viewBox="0 0 24 24">
+                    <path d="M8 3L3 6l2 4 3-1v12h8V9l3 1 2-4-5-3a4 4 0 01-8 0z" />
+                </svg><span>Attire</span>
+            </button>
+            <button class="tab" data-tab="message" aria-label="Message">
+                <svg viewBox="0 0 24 24">
+                    <path d="M4 4h16v12H9l-5 4V4z" />
+                </svg><span>Message</span>
+            </button>
+        </nav>
+    </section>
+
+    <!-- Background music -->
+    <audio id="bgm" src="assets/audio/givemeyourforevertrim.mp3" loop preload="auto"></audio>
+    <button id="musicBtn" class="music-btn hidden" aria-label="Toggle music">🔊</button>
+
+    <script src="js/main.js"></script>
+</body>
+
+</html>
